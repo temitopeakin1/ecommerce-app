@@ -11,39 +11,41 @@ import { Product } from '../../../product';
   styleUrls: ['./all-products.component.css'],
 })
 export class AllProductsComponent implements OnInit {
-  productList: any[] = [];
-  fliterValue: string = 'Default';
+  productList: Product[] = [];
+  filteredProductList: Product[] = [];
+  filterValue: string = 'Default';
+  listFilter: string = '';
   items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20];
   Loading: boolean = false;
-  
+
   throttle = 300;
   scrollDistance = 1;
   scrollUpDistance = 2;
   limit: number = 20;
+
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private toast: HotToastService,
-    
+    private toast: HotToastService
   ) {}
 
-
-
-
   ngOnInit(): void {
-    debugger;
     this.fetchProducts();
   }
 
-  //fetch all products
+  // Fetch all products
   fetchProducts() {
     this.Loading = true;
     this.productService.getAllProducts().subscribe((res: any) => {
       this.productList = res.products;
+      this.filteredProductList = this.productList;
+      this.applyFilter();
+      this.Loading = false;
     });
   }
 
-  addProductToCart(item: any) {
+  // Add product to cart
+  addProductToCart(item: Product) {
     const cartItem: CartItem = {
       product: item,
       quantity: 1,
@@ -54,11 +56,33 @@ export class AllProductsComponent implements OnInit {
     });
   }
 
+  applyFilter() {
+    let tempList = this.productList;
 
-  
-  // onScroll() {
-  //   const offset = this.limit;
-  //   this.limit = (this.limit + 20) == 178 || (this.limit + 20) > 178 ? 178 : this.limit + 20;
-  //   if(this.limit !== 178 ) this.fetchProducts(Math.floor(offset), Math.floor(this.limit));
-  // }
+    if (this.listFilter) {
+      tempList = tempList.filter(product =>
+        product.title.toLowerCase().includes(this.listFilter.toLowerCase())
+      );
+    }
+
+// Sort products
+    switch (this.filterValue) {
+      case 'Low to High':
+        tempList = tempList.sort((a, b) => a.price - b.price);
+        break;
+      case 'High to Low':
+        tempList = tempList.sort((a, b) => b.price - a.price);
+        break;
+      case 'A to Z':
+        tempList = tempList.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'Z to A':
+        tempList = tempList.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      default:
+        break;
+    }
+
+    this.filteredProductList = tempList;
+  }
 }

@@ -70,7 +70,7 @@ main .card-banner {
 .section-heading .filter-container p {
     flex-basis: 50%;
     padding-right: 15px;
-    font-size: 19px;
+    font-size: 18px;
     margin-top: 11px;
 }
 
@@ -321,7 +321,7 @@ main .card-banner {
     .section-heading .filter-container {
         display: block !important;
     }
-
+    
     .section-heading .filter-container p {
         margin-top: 0px;
         margin-bottom: 6px;
@@ -434,4 +434,8 @@ a:focus, a:active, .btn.active.focus,
     background-color: #fb5231;
     color: #fff;
     right: 0.71em;
+}
+
+.container .section-heading {
+    margin-top: 50px;
 }

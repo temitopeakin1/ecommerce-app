@@ -146,8 +146,6 @@ export class ProductDetailsComponent implements OnInit {
     if (event.dragging == false) {
       this.startPosition = event.data.startPosition;
       const anyService = this.myCarousel as any;
-      // const carouselService = anyService.carouselService as CarouselService;
-      // carouselService.to(this.startPosition, 3)
     }
   }
 
