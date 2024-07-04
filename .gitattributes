@@ -1,0 +1,6 @@
+# Exclude CSS files from language statistics
+*.css linguist-vendored
+
+# Ensure TypeScript files are included in language statistics
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript

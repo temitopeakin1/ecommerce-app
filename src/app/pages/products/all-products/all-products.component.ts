@@ -3,6 +3,7 @@ import { CartService } from '../../services/cart.service';
 import { ProductService } from '../services/product.service';
 import { HotToastService } from '@ngneat/hot-toast';
 import { CartItem } from '../../../models/cart';
+import { Product } from '../../../product';
 
 @Component({
   selector: 'app-all-products',
@@ -11,15 +12,10 @@ import { CartItem } from '../../../models/cart';
 })
 export class AllProductsComponent implements OnInit {
   productList: any[] = [];
-  PageNumber: number = 1;
-  numberOfPages: any[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  isFavourite: boolean = false;
   fliterValue: string = 'Default';
-  items = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22,
-  ];
+  items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20];
   Loading: boolean = false;
-
+  
   throttle = 300;
   scrollDistance = 1;
   scrollUpDistance = 2;
@@ -27,8 +23,11 @@ export class AllProductsComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private toast: HotToastService
+    private toast: HotToastService,
+    
   ) {}
+
+
 
 
   ngOnInit(): void {
@@ -56,4 +55,10 @@ export class AllProductsComponent implements OnInit {
   }
 
 
+  
+  // onScroll() {
+  //   const offset = this.limit;
+  //   this.limit = (this.limit + 20) == 178 || (this.limit + 20) > 178 ? 178 : this.limit + 20;
+  //   if(this.limit !== 178 ) this.fetchProducts(Math.floor(offset), Math.floor(this.limit));
+  // }
 }

@@ -21,7 +21,7 @@ export class CartComponent implements OnInit {
   constructor
     (
       private router: Router,
-      private _cartService: CartService,
+      private cartService: CartService,
       private _toast: HotToastService
     ) { }
 
@@ -39,14 +39,14 @@ export class CartComponent implements OnInit {
   }
 
   getCartList() {
-    this._cartService.cart$.subscribe((cart) => {
+    this.cartService.cart$.subscribe((cart) => {
       this.cartList = cart.items!;
     });
   }
 
 
   deleteCartItem() {
-    this._cartService.deleteCartItem(this.deleteProductId);
+    this.cartService.deleteCartItem(this.deleteProductId);
     this.closeCofirmModal();
     this._toast.error('Product removed from cart',
       {
@@ -56,7 +56,7 @@ export class CartComponent implements OnInit {
   }
 
   getTotalPrice() {
-    this._cartService.cart$.subscribe((cart) => {
+    this.cartService.cart$.subscribe((cart) => {
       this.totalPrice = 0;
       if (cart) {
         cart.items?.map((item) => {
@@ -73,7 +73,7 @@ export class CartComponent implements OnInit {
     } else {
       value--;
     }
-    this._cartService.setCartItem(
+    this.cartService.setCartItem(
       {
         product: cartItem.product,
         quantity: value,
@@ -102,7 +102,7 @@ export class CartComponent implements OnInit {
     this.isVisible = false;
   }
   ngOnInit(): void {
-    this._cartService.cart$.subscribe((cart) => {
+    this.cartService.cart$.subscribe((cart) => {
       this.cartCount = cart?.items?.length ?? 0;
     });
     this.getCartList();

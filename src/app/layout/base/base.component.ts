@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-base',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class BaseComponent implements OnInit {
   isLoading: boolean = true;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: any) {}
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -19,6 +20,8 @@ export class BaseComponent implements OnInit {
   }
 
   onActivate(event: any): void {
-    window.scroll(0, 0);
+    if (isPlatformBrowser(this.platformId)) {
+      window.scroll(0, 0);
+    }
   }
 }

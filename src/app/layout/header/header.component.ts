@@ -1,26 +1,50 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-//import { AuthService } from '../../pages/auth/services/auth.service';
 import { CartService } from '../../pages/services/cart.service';
-//import { WishlistService } from '../../pages/services/wishlist.service';
+import { Product } from '../../product';
+import { ProductService } from '../../pages/products/services/product.service';
+
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
-
 export class HeaderComponent implements OnInit {
-
   cartCount = 1;
-  // wishCount = 0;
   sticky: boolean = false;
-  //loggedIn: boolean = false;
-  constructor
-    (
-      private _cartService: CartService,
-      //private _auth: AuthService,
-      //private _wishlistService: WishlistService,
-    ) { }
+  private _listFilter = "";
+  filteredProducts: Product[] = [];
+  productList: Product[] = [];
+
+  constructor(private cartService: CartService, private productService: ProductService) {}
+
+  ngOnInit(): void {
+    this.cartService.cart$.subscribe((cart) => {
+      this.cartCount = cart?.items?.length ?? 0;
+    });
+
+    this.productService.getAllProducts().subscribe((products: Product[]) => {
+      this.productList = products;
+      this.filteredProducts = this.productList;
+    });
+  }
+
+  // filter method implementation
+  performFilter(filterBy: string): Product[] {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.productList.filter((product: Product) =>
+      product.title.toLocaleLowerCase().includes(filterBy)
+    );
+  }
+
+  get listFilter(): string {
+    return this._listFilter;
+  }
+
+  set listFilter(value: string) {
+    this._listFilter = value;
+    this.filteredProducts = this.performFilter(value);
+  }
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -31,16 +55,4 @@ export class HeaderComponent implements OnInit {
       this.sticky = false;
     }
   }
-
-  ngOnInit(): void {
-    this._cartService.cart$.subscribe((cart) => {
-      this.cartCount = cart?.items?.length ?? 0;
-    });
-    // this._wishlistService.wishList$.subscribe((wishList) => {
-    //   this.wishCount = wishList?.items?.length ?? 0;
-    // });
-    // this.loggedIn = this._auth.loggedIn();
-    // console.log(this.loggedIn)
-  }
-
 }

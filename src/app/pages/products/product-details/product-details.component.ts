@@ -1,25 +1,21 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ProductService } from '../services/product.service';
-//import { CarouselService } from 'ngx-owl-carousel-o/lib/services/carousel.service';
-
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../../services/cart.service';
-//import { CartItem } from '../../models/cart';
 import { HotToastService } from '@ngneat/hot-toast';
 import { CartItem } from '../../../models/cart';
-// import { WishItem } from '../../models/wishlist';
-// import { WishlistService } from '../../services/wishlist.service';
+
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css']
+  styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit {
   backgroundPos: string = 'center center';
-  startPosition: number = 0; // Position of active Slide
-  @ViewChild("myCarousel") myCarousel!: ElementRef;  // slider One Big Image
+  startPosition: number = 0;
+  @ViewChild('myCarousel') myCarousel!: ElementRef;
 
   slider1Settings: OwlOptions = {
     loop: true,
@@ -31,21 +27,21 @@ export class ProductDetailsComponent implements OnInit {
     // navText: ['', ''],
     responsive: {
       0: {
-        items: 1
+        items: 1,
       },
       400: {
-        items: 1
+        items: 1,
       },
       740: {
-        items: 3
+        items: 3,
       },
       940: {
-        items: 4
-      }
+        items: 4,
+      },
     },
     nav: false,
-    startPosition: this.startPosition
-  }
+    startPosition: this.startPosition,
+  };
 
   slider2Settings: OwlOptions = {
     loop: true,
@@ -59,22 +55,22 @@ export class ProductDetailsComponent implements OnInit {
     // navText: ['', ''],
     responsive: {
       0: {
-        items: 3
+        items: 3,
       },
       400: {
-        items: 3
+        items: 3,
       },
       740: {
-        items: 3
+        items: 3,
       },
       940: {
-        items: 3
-      }
+        items: 3,
+      },
     },
     nav: false,
     // animateOut: 'slideOutUp',
     // animateIn: 'slideInUp'
-  }
+  };
 
   slider3Settings: OwlOptions = {
     loop: true,
@@ -84,53 +80,60 @@ export class ProductDetailsComponent implements OnInit {
     margin: 10,
     dots: false,
     navSpeed: 700,
-    navText: ['<i class="fa-solid fa-arrow-left"></i>', '<i class="fa-solid fa-arrow-right"></i>'],
+    navText: [
+      '<i class="fa-solid fa-arrow-left"></i>',
+      '<i class="fa-solid fa-arrow-right"></i>',
+    ],
     responsive: {
       0: {
-        items: 1
+        items: 1,
       },
       400: {
-        items: 1
+        items: 1,
       },
       740: {
-        items: 3
+        items: 3,
       },
       940: {
-        items: 5
+        items: 5,
       },
       1200: {
-        items: 5
+        items: 5,
       },
       1400: {
-        items: 5
+        items: 5,
       },
       1600: {
-        items: 5
-      }
+        items: 5,
+      },
     },
     nav: true,
-  }
+  };
 
-  product: any
-  productId!: number
-  categoryId!: number
+  product: any;
+  productId!: number;
+  categoryId!: number;
   imgNotFounded: boolean = false;
   cartList!: CartItem[];
-  //WishItems!: WishItem[];
-  quantity!: number
+  quantity!: number;
   loremText: string = `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, quos aspernatur eum dolorr eprehenderit eos et libero debitis itaque voluptatem! Laudantium modi sequi, id numquam liberosed quaerat. Eligendi, ipsum!`;
-  categoryProducts: any
-  isProductInWishList: boolean = false;
+  categoryProducts: any;
   productInCartList: any;
 
   constructor(
-    private _productService: ProductService,
-    private _cartService: CartService,
-    private _route: ActivatedRoute,
-    private _toast: HotToastService,
-    //private _wishlistService: WishlistService,
-  ) { }
+    private productService: ProductService,
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private toast: HotToastService
+  ) {}
 
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.productId = params['id'];
+      this.getproduct();
+      this.getCartList();
+    });
+  }
 
   ZoomImage(event: any) {
     const { left, top, width, height } = event.target.getBoundingClientRect();
@@ -139,66 +142,51 @@ export class ProductDetailsComponent implements OnInit {
     this.backgroundPos = `${x}% ${y}%`;
   }
 
-
   nextSlide(event: any) {
     if (event.dragging == false) {
       this.startPosition = event.data.startPosition;
       const anyService = this.myCarousel as any;
-      //const carouselService = anyService.carouselService as CarouselService;
-      //carouselService.to(this.startPosition, 3)
+      // const carouselService = anyService.carouselService as CarouselService;
+      // carouselService.to(this.startPosition, 3)
     }
   }
 
-
   getproduct() {
-    this._productService.getSingleProduct(this.productId).subscribe((data) => {
+    this.productService.getSingleProduct(this.productId).subscribe((data) => {
       this.product = data;
       this.categoryId = data.category.id;
-      this.getProductsByCategory(this.categoryId);
+      this.fetchProductCategory(this.categoryId);
       this.productInCartList = this.checkProductInCartList(data);
-      //this.isProductInWishList = this.productInWishList(data);
       if (data.images.length == 1) {
-        this.imgNotFounded = true
+        this.imgNotFounded = true;
       }
-    })
+    });
   }
 
   getCartList() {
-    this._cartService.cart$.subscribe((cart) => {
+    this.cartService.cart$.subscribe((cart) => {
       this.cartList = cart.items!;
-      if(this.product){
+      if (this.product) {
         this.productInCartList = this.checkProductInCartList(this.product);
       }
     });
   }
 
-  // getWishList() {
-  //   this._wishlistService.wishList$.subscribe((cart) => {
-  //     this.WishItems = cart.items!;
-  //     if(this.product){
-  //       this.isProductInWishList = this.productInWishList(this.product);
-  //     }
-  //   });
-  // }
-
   checkProductInCartList(product: any) {
-    const cartItemExist = this.cartList.find((item) => item.product.id === product.id);
-    this.quantity = cartItemExist?.quantity || 0
+    const cartItemExist = this.cartList.find(
+      (item) => item.product.id === product.id
+    );
+    this.quantity = cartItemExist?.quantity || 0;
     return cartItemExist;
   }
 
-  // productInWishList(product: any) {
-  //   const WishItemExist = this.WishItems.some((item) => item.product.id === product.id);
-  //   return WishItemExist;
-  // }
-
   updateCartItemQuantity(value: number, product: any, operation: string) {
-    if (operation == "+") {
+    if (operation == '+') {
       value++;
     } else {
       value--;
     }
-    this._cartService.setCartItem(
+    this.cartService.setCartItem(
       {
         product: product,
         quantity: value,
@@ -210,50 +198,17 @@ export class ProductDetailsComponent implements OnInit {
   addProductToCart(item: any) {
     const cartItem: CartItem = {
       product: item,
-      quantity: 1
+      quantity: 1,
     };
-    this._cartService.setCartItem(cartItem);
-    this._toast.success('Product added to cart successfully',
-      {
-        position: 'top-left'
-      });
-  }
-
-  // addProductToWishList(item: any) {
-  //   const WishItem: WishItem = {
-  //     product: item
-  //   };
-  //   if (this.isProductInWishList) {
-  //     this._wishlistService.deleteWishItem(WishItem.product.id);
-  //     this._toast.error('Product removed from wishlist',
-  //       {
-  //         position: 'top-left'
-  //       });
-  //   }
-  //   else {
-  //     this._wishlistService.setWishItem(WishItem);
-  //     this._toast.success('Product added to wishlist successfully',
-  //       {
-  //         position: 'top-left'
-  //       });
-  //   }
-  // }
-
-
-  getProductsByCategory(categoryId: number) {
-    this._productService.getProductsByCategory(categoryId).subscribe((data) => {
-      this.categoryProducts = data;
-    })
-  }
-
-  ngOnInit(): void {
-    this._route.params.subscribe(params => {
-      this.productId = params['id'];
-      this.getproduct();
-      this.getCartList();
-      //this.getWishList();
+    this.cartService.setCartItem(cartItem);
+    this.toast.success('Product added to cart successfully', {
+      position: 'top-left',
     });
-
   }
 
+  fetchProductCategory(id: number) {
+    this.productService.getProductsByCategory(id).subscribe((data) => {
+      this.categoryProducts = data;
+    });
+  }
 }

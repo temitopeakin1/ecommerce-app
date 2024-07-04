@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { HotToastService } from '@ngneat/hot-toast';
-import { ProductService } from '../services/product.service';
 import { CartItem } from '../../../models/cart';
 
 @Component({
@@ -13,7 +12,6 @@ export class ProductComponent implements OnInit {
   @Input() product: any;
 
   constructor(
-    private _product: ProductService,
     private _cartService: CartService,
     private _toast: HotToastService
   ) {}
