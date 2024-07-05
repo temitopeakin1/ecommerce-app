@@ -236,7 +236,7 @@
 @media only screen and (max-width: 479px) {
   .sidebar {
     width: 80vw;
-    right: -80vw;
+    right: -80vw
   }
 
   .btn-close {
