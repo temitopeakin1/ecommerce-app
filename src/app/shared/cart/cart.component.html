@@ -90,7 +90,7 @@
     <div class="sidebar-total" *ngIf="cartCount">
         <h5 class="total-price">Total: <span> ${{totalPrice}}</span></h5>
         <div class="checkout-btn d-flex">
-            <button type="button" class="btn btn-warning" (click)="navigateToCheckout()">
+            <button type="button" class="btn" (click)="navigateToCheckout()">
                 Checkout
             </button>
         </div>
@@ -107,8 +107,8 @@
     (cancel)="closeCofirmModal()"
     [isVisible]="isVisible"
     [title]="'Confirm this action'"
-    [message]="'Are your sure to remove product from cart ?'"
-    [confirmBtnText]="'ok'"
+    [message]="'Are your sure to remove product from cart?'"
+    [confirmBtnText]="'Ok'"
     [cancelBtnText]="'Cancel'"
  ></app-confirm-model>
 

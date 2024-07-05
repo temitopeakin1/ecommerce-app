@@ -19,32 +19,6 @@
     opacity: .6;
 }
 
-
-.rating-stars {
-    display: inline-block;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    white-space: nowrap;
-    clear: both;
-}
-
-.rating-stars li {
-    display: block;
-    text-overflow: clip;
-    white-space: nowrap;
-    z-index: 1;
-}
-
-.rating-stars li.stars-active {
-    z-index: 2;
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-}
-
 .label-rating {
     margin-left: 5px;
     margin-right: 5px;
@@ -177,4 +151,20 @@
     outline: none;
     background-color: #ff8100;
 
+}
+
+.btn {
+    background-color: #ff8100;
+    color: white;
+}
+
+.bg {
+    background-color: #ff8100;
+    color: white;
+    padding: 20px;
+    margin-bottom: 50px
+}
+
+.padding-y {
+    margin-bottom: 100px;
 }

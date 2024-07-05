@@ -95,42 +95,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   margin-bottom: 0.625em;
 }
-
-/* #f0f0f0 */
-.product-content .ratting {
-  /* float: right; */
-  margin: 5px 0;
-}
-
-.product-content .ratting i {
-  color: #444444;
-  font-size: 14px;
-  /* float: left; */
-  margin-right: 4px;
-  line-height: 24px;
-}
-
-.fa-star-half-o:before {
-  content: "\f123";
-}
-
-.fa-star-o:before {
-  content: "\f006";
-}
-
-.product-content .ratting i:last-child {
-  margin-right: 0;
-}
-
-.product-content .ratting .product-rate-quantity {
-  color: #888;
-  font-size: 0.8125em;
-  font-weight: normal;
-  line-height: 1;
+.badge {
+  background-color:#ff8100 ;
 }
 
 .product-content__footer {
@@ -227,6 +196,10 @@
   font-size: 0.8125em;
   font-weight: normal;
   line-height: 1;
+}
+
+.product-name span.item-title {
+  font-size: 15px;
 }
 
 @media only screen and (max-width: 767px) {
