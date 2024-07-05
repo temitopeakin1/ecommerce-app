@@ -223,6 +223,12 @@
   color: #fff;
 }
 
+@media only screen and (max-width: 767px) {
+    .checkout-btn button {
+        margin-bottom: 10px;
+    }
+}
+
 .checkout-btn button:hover a {
   color: #fff;
 }
