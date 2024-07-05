@@ -26,10 +26,10 @@ main .card-banner {
   font-size: 3em;
 }
 
-.btn-warning {
+.btn {
   color: #fff;
   background-color: #ff8100;
-  border-color: #ff8100;
+  border-color: #ffff;
   margin-top: 20px;
 }
 
