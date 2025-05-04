@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-confirm-model',
-  templateUrl: './confirm-model.component.html',
-  styleUrl: './confirm-model.component.css',
+    selector: 'app-confirm-model',
+    templateUrl: './confirm-model.component.html',
+    styleUrl: './confirm-model.component.css',
+    standalone: false
 })
 export class ConfirmModelComponent implements OnInit {
   @Input() isVisible!: boolean;

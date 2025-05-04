@@ -6,9 +6,10 @@ import { CartItem } from '../../../models/cart';
 import { Product } from '../../../product';
 
 @Component({
-  selector: 'app-all-products',
-  templateUrl: './all-products.component.html',
-  styleUrls: ['./all-products.component.css'],
+    selector: 'app-all-products',
+    templateUrl: './all-products.component.html',
+    styleUrls: ['./all-products.component.css'],
+    standalone: false
 })
 export class AllProductsComponent implements OnInit {
   productList: Product[] = [];

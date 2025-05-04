@@ -4,9 +4,10 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { CartItem } from '../../../models/cart';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css'],
+    selector: 'app-product',
+    templateUrl: './product.component.html',
+    styleUrls: ['./product.component.css'],
+    standalone: false
 })
 export class ProductComponent implements OnInit {
   @Input() product: any;

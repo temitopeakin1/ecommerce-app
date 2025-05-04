@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
-  selector: 'app-base',
-  templateUrl: './base.component.html',
-  styleUrls: ['./base.component.css']
+    selector: 'app-base',
+    templateUrl: './base.component.html',
+    styleUrls: ['./base.component.css'],
+    standalone: false
 })
 export class BaseComponent implements OnInit {
   isLoading: boolean = true;

@@ -6,9 +6,10 @@ import { CartService } from '../../pages/services/cart.service';
 import { CartItem } from '../../models/cart';
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+    selector: 'app-cart',
+    templateUrl: './cart.component.html',
+    styleUrls: ['./cart.component.css'],
+    standalone: false
 })
 export class CartComponent implements OnInit {
 
